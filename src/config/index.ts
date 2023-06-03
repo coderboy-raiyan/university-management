@@ -1,9 +1,10 @@
-import { configDotenv } from "dotenv";
-import path from "path";
+import { configDotenv } from 'dotenv';
+import path from 'path';
 
-configDotenv({ path: path.join(process.cwd(), ".env") });
+configDotenv({ path: path.join(process.cwd(), '.env') });
 
 export default {
   port: process.env.PORT,
+  default_user_pass: process.env.DEFAULT_USER_PASS,
   database_url: process.env.DATABASE_URL,
 };
