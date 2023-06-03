@@ -1,4 +1,5 @@
 import { Application, Request, Response } from 'express';
+import userRoutes from './app/modules/users/user.routes';
 
 import cors from 'cors';
 import express from 'express';
@@ -10,7 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req: Request, res: Response) => {
+app.use('/api/v1/users', userRoutes);
+
+app.get('/', async (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
