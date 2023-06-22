@@ -17,4 +17,6 @@ async function createUser(user: IUser): Promise<IUser | null> {
   return createdUser;
 }
 
-export default { createUser };
+const userServices = { createUser };
+
+export default userServices;

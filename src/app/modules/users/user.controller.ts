@@ -1,7 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import userServices from './user.services';
 
-async function createUser(req: Request, res: Response, next: NextFunction) {
+const createUser: RequestHandler = async (req, res, next) => {
   try {
     const result = await userServices.createUser(req.body);
     res.status(201).json({
@@ -12,5 +12,8 @@ async function createUser(req: Request, res: Response, next: NextFunction) {
   } catch (error: any) {
     next(error);
   }
-}
-export default { createUser };
+};
+
+const userControllers = { createUser };
+
+export default userControllers;

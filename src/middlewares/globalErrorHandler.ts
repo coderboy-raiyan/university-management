@@ -1,18 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 import config from '../config';
 import ApiError from '../errors/ApiError';
 import handleValidationError from '../errors/handleValidationError';
 import { IGenericErrorMessage } from '../interfaces/error';
 
-function globalErrorHandler(
-  error: any,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let statusCode = 500;
   let message = 'Something went wrong !';
   let errorMessages: IGenericErrorMessage[] = [];
@@ -37,6 +32,6 @@ function globalErrorHandler(
     errorMessages,
     stack: config.env != 'production' ? error.stack : undefined,
   });
-}
+};
 
 export default globalErrorHandler;
