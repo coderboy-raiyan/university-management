@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -17,18 +18,28 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let message = 'Something went wrong !';
   let errorMessages: IGenericErrorMessage[] = [];
 
-  if (error.name == 'ValidationError') {
-    const simplifiedVersion = handleValidationError(error);
-    statusCode = simplifiedVersion.statusCode;
-    message = simplifiedVersion.message;
-    errorMessages = simplifiedVersion.errorMessages;
-  } else if (error instanceof Error) {
-    message = error?.message;
-    errorMessages = error.message ? [{ path: '', message: error.message }] : [];
-  } else if (error instanceof ApiError) {
-    statusCode = error?.statusCode;
-    message = error?.message;
-    errorMessages = error.message ? [{ path: '', message: error.message }] : [];
+  switch (error.name) {
+    case 'ValidationError':
+      const simplifiedVersion = handleValidationError(error);
+      statusCode = simplifiedVersion.statusCode;
+      message = simplifiedVersion.message;
+      errorMessages = simplifiedVersion.errorMessages;
+      break;
+    case error instanceof Error:
+      message = error?.message;
+      errorMessages = error.message
+        ? [{ path: '', message: error.message }]
+        : [];
+      break;
+    case error instanceof ApiError:
+      statusCode = error?.statusCode;
+      message = error?.message;
+      errorMessages = error.message
+        ? [{ path: '', message: error.message }]
+        : [];
+      break;
+    default:
+      break;
   }
 
   res.status(statusCode).json({
