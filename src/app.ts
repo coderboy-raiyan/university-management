@@ -3,7 +3,6 @@ import userRoutes from './app/modules/users/user.routes';
 
 import cors from 'cors';
 import express from 'express';
-import ApiError from './errors/ApiError';
 import globalErrorHandler from './middlewares/globalErrorHandler';
 const app: Application = express();
 
@@ -15,8 +14,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/users', userRoutes);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  next(new ApiError(404, 'User not found'));
+  res.status(200).json({ message: 'Server is healthy' });
 });
 
 app.use(globalErrorHandler);
