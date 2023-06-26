@@ -3,9 +3,6 @@ import userServices from './user.services';
 
 const createUser: RequestHandler = async (req, res, next) => {
   try {
-    console.log(req.body);
-    // await userValidation.createZodSchema.parseAsync(req);
-
     const { user } = req.body;
     const result = await userServices.createUser(user);
     res.status(201).json({
